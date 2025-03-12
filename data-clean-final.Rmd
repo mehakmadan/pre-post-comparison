@@ -1,0 +1,306 @@
+---
+title: "data-clean-final"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(dplyr)
+set.seed(1234)
+```
+
+```{r}
+#| label: read-messy-data
+
+all.pre.data <- read_csv("/Users/mac/Downloads/TTPreDATA.csv")
+all.post.data <- read_csv("/Users/mac/Downloads/TTPostDATA.csv")
+```
+
+```{r}
+# Cleaning the data set
+## Removing unwanted rows
+all.pre.data <- all.pre.data %>%
+  select(-starts_with("RC"), 
+         -Pre_Grade, 
+         -Pre_Birthdate, 
+         -Pre_PriorSchool, 
+         -Pre_CurrentSchool, 
+         -Pre_FutureSchool, 
+         -Pre_RaceID, 
+         -Pre_GenderID)
+
+all.post.data <- all.post.data %>%
+  select(-starts_with("RC"), 
+         -Post_Grade, 
+         -Post_Birthdate, 
+         -Post_PriorSchool, 
+         -Post_CurrentSchool, 
+         -Post_FutureSchool, 
+         -Post_RaceID, 
+         -Post_GenderID)
+```
+
+```{r}
+# Replacing 99, 88 with NA (i.e., missing data across the 2 data sets)
+all.pre.data[all.pre.data == 99 | all.pre.data == 88] <- NA
+all.post.data[all.post.data == 99 | all.post.data == 88] <- NA
+```
+
+```{r}
+# Recoding certain scales in Pre data
+
+# Recode self-esteem items
+all.pre.data <- all.pre.data %>%
+  mutate(across(starts_with("Pre_SelfEsteem"), ~ recode(., 
+                                                    `1` = 4, 
+                                                    `2` = 3, 
+                                                    `3` = 2, 
+                                                    `4` = 1)))
+
+# Recode belonging items
+all.pre.data <- all.pre.data %>%
+  mutate(across(starts_with("Pre_Belonging"), ~ recode(., 
+                                                    `1` = 4, 
+                                                    `2` = 3, 
+                                                    `3` = 2, 
+                                                    `4` = 1)))
+
+# Recode Black Girl Space items
+all.pre.data <- all.pre.data %>%
+  mutate(across(starts_with("Pre_BlackGirlSpace"), ~ recode(., 
+                                                    `1` = 5, 
+                                                    `2` = 4, 
+                                                    `3` = 3, 
+                                                    `4` = 2,
+                                                    `5` = 1)))
+# Recode Critical Agency items
+all.pre.data <- all.pre.data %>%
+  mutate(across(starts_with("Pre_CriticalAgency"), ~ recode(., 
+                                                    `1` = 4, 
+                                                    `2` = 3, 
+                                                    `3` = 2, 
+                                                    `4` = 1)))
+```
+
+```{r}
+# Calculating scores for each PRE scale 
+
+# Calculate total AMES score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.Ames = rowSums(select(., starts_with("Pre_AMES")), na.rm = FALSE))
+
+# Calculate total Self Compassion score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.SelfCompassion = rowSums(select(., starts_with("Pre_SelfCompassion")), na.rm = FALSE))
+
+# Calculate total Emotional Clarity score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.EmoClarity = rowSums(select(., starts_with("Pre_EmoClarity")), na.rm = FALSE)) 
+
+# Calculate total Self Esteem score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.SelfEsteem = rowSums(select(., starts_with("Pre_SelfEsteem")), na.rm = FALSE))
+
+# Calculate total Black Girl ID Explore score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.BlackGirlId = rowSums(select(., starts_with("Pre_BlackGirl_ID")), na.rm = FALSE)) 
+
+# Calculate total Image Acceptance score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.ImgAcceptance = rowSums(select(., starts_with("Pre_ImgAcceptance")), na.rm = FALSE))
+
+# Calculate total Relatedness score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.Relatedness = rowSums(select(., starts_with("Pre_Relatedness")), na.rm = FALSE))
+
+# Calculate total belonging score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.Belonging = rowSums(select(., starts_with("Pre_Belonging")), na.rm = FALSE)) 
+
+# Calculate total Black Girl Space score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.BlackGirlSpace = rowSums(select(., starts_with("Pre_BlackGirlSpace")), na.rm = FALSE)) 
+
+# Calculate total Critical Agency score for each participant
+all.pre.data <- all.pre.data %>%
+  mutate(Total.Pre.CriticalAgency = rowSums(select(., starts_with("Pre_CriticalAgency")), na.rm = FALSE)) 
+```
+
+```{r}
+# Recoding certain scales in Post data
+
+# Recode self-esteem items
+all.post.data <- all.post.data %>%
+  mutate(across(starts_with("Post_SelfEsteem"), ~ recode(., 
+                                                    `1` = 4, 
+                                                    `2` = 3, 
+                                                    `3` = 2, 
+                                                    `4` = 1)))
+
+# Recode belonging items
+all.post.data <- all.post.data %>%
+  mutate(across(starts_with("Post_Belonging"), ~ recode(., 
+                                                    `1` = 4, 
+                                                    `2` = 3, 
+                                                    `3` = 2, 
+                                                    `4` = 1)))
+
+# Recode Black Girl Space items
+all.post.data <- all.post.data %>%
+  mutate(across(starts_with("Post_BlackGirlSpace"), ~ recode(., 
+                                                    `1` = 5, 
+                                                    `2` = 4, 
+                                                    `3` = 3, 
+                                                    `4` = 2,
+                                                    `5` = 1)))
+# Recode Critical Agency items
+all.post.data <- all.post.data %>%
+  mutate(across(starts_with("Post_CriticalAgency"), ~ recode(., 
+                                                    `1` = 4, 
+                                                    `2` = 3, 
+                                                    `3` = 2, 
+                                                    `4` = 1)))
+```
+
+```{r}
+# Calculating scores for each POST scale 
+
+# Calculate total AMES score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.Ames = rowSums(select(., starts_with("Post_AMES")), na.rm = FALSE))
+
+# Calculate total Self Compassion score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.SelfCompassion = rowSums(select(., starts_with("Post_SelfCompassion")), na.rm = FALSE))
+
+# Calculate total Emotional Clarity score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.EmoClarity = rowSums(select(., starts_with("Post_EmoClarity")), na.rm = FALSE))
+
+# Calculate total Self Esteem score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.SelfEsteem = rowSums(select(., starts_with("Post_SelfEsteem")), na.rm = FALSE))
+
+# Calculate total Black Girl ID Explore score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.BlackGirlId = rowSums(select(., starts_with("Post_BlackGirl_ID")), na.rm = FALSE))
+
+# Calculate total Image Acceptance score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.ImgAcceptance = rowSums(select(., starts_with("Post_ImgAcceptance")), na.rm = FALSE))
+
+# Calculate total Relatedness score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.Relatedness = rowSums(select(., starts_with("Post_Relatedness")), na.rm = FALSE))
+
+# Calculate total belonging score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.Belonging = rowSums(select(., starts_with("Post_Belonging")), na.rm = FALSE))
+
+# Calculate total Black Girl Space score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.BlackGirlSpace = rowSums(select(., starts_with("Post_BlackGirlSpace")), na.rm = FALSE));
+
+# Calculate total Critical Agency score for each participant
+all.post.data <- all.post.data %>%
+  mutate(Total.Post.CriticalAgency = rowSums(select(., starts_with("Post_CriticalAgency")), na.rm = FALSE))
+```
+
+```{r}
+# Making a new set of data frame only having final scale values
+pre.post.data <- full_join(all.pre.data, all.post.data, by = c("Participant_Id", "Name"))
+
+pre.post.data <- pre.post.data %>% 
+  select(Participant_Id, Name, Total.Pre.Ames, Total.Pre.SelfCompassion, Total.Pre.EmoClarity, Total.Pre.SelfEsteem, Total.Pre.BlackGirlId, Total.Pre.ImgAcceptance, Total.Pre.Relatedness, Total.Pre.Belonging, Total.Pre.BlackGirlSpace, Total.Pre.CriticalAgency, Total.Post.Ames, Total.Post.SelfCompassion, Total.Post.EmoClarity, Total.Post.SelfEsteem, Total.Post.BlackGirlId, Total.Post.ImgAcceptance, Total.Post.Relatedness, Total.Post.Belonging, Total.Post.BlackGirlSpace, Total.Post.CriticalAgency) %>% 
+  arrange(Participant_Id)
+```
+
+
+```{r}
+
+# Performing paired t-tests and storing results in a data frame
+
+# Define the list of scale names
+scales <- c("Ames", "SelfCompassion", "EmoClarity", "SelfEsteem", 
+            "BlackGirlId", "ImgAcceptance", "Relatedness", 
+            "Belonging", "BlackGirlSpace", "CriticalAgency")
+
+# Create an empty data frame to store results
+results_data <- data.frame(Scale = character(), 
+                           pre_mean = numeric(), 
+                           post_mean = numeric(), 
+                           p_value = numeric())
+
+# Loop over each scale, perform paired t-test, and store results
+for (scale in scales) {
+  pre_column <- paste0("Total.Pre.", scale)
+  post_column <- paste0("Total.Post.", scale)
+  
+  # Calculate the means for pre and post
+  pre_mean_scores <- mean(pre.post.data[[pre_column]], na.rm = TRUE)
+  post_mean_scores <- mean(pre.post.data[[post_column]], na.rm = TRUE)
+  
+  # Perform the paired t-test
+  t_test <- t.test(pre.post.data[[pre_column]], pre.post.data[[post_column]], paired = TRUE)
+  
+  # Store the results in the data frame
+  results_data <- results_data %>%
+    add_row(Scale = scale, 
+            pre_mean = pre_mean_scores, 
+            post_mean = post_mean_scores, 
+            p_value = t_test$p.value) 
+}
+
+# View the results
+print(results_data)
+```
+```{r}
+#making the data presentable
+results_data <- results_data %>% 
+  setNames(str_replace_all(names(.), "_", " ")) %>% 
+  rename_with(~ str_to_title(.)) %>% 
+  mutate(Scale = str_replace_all(Scale, "(?<!^)([A-Z])", " \\1")) 
+```
+
+```{r}
+head(results_data$Scale)
+```
+
+
+
+```{r}
+
+#making the data presentable
+results_data <- results_data %>%
+  rename(Significance = `P Value`) %>%
+  rename("Emotional Clarity" = "Emo Clarity") %>% 
+  rename("Image Acceptance" = "Img Acceptance")
+```
+
+
+
+
+
+```{r}
+#making the data tidy
+# Tidy the pre.post.data to make it longer
+tidy.data <- pre.post.data %>%
+  pivot_longer(
+    cols = starts_with("Total"),    # Specify the columns to pivot
+    names_to = c("Time", "Scale"),   # Create new 'Time' and 'Scale' columns
+    names_pattern = "Total\\.(.*)\\.(.*)", # Define the pattern to extract scale and time
+    values_to = "Score"               # The name of the new column for scores
+  ) %>%
+  # Creating the desired wide format
+  pivot_wider(
+    names_from = Scale,                # Create new columns from the Scale variable
+    values_from = Score                 # Fill those new columns with values from the Score variable
+  )
+```
+
+```{r}
+write_csv(results_data, "results_data")
+write_csv(tidy.data, "tidy_data.csv")
+```
+
