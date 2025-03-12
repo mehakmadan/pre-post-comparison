@@ -1,0 +1,512 @@
+---
+title: "Final Research Project: Pre-Post Comparison"
+shorttitle: "Comparison"
+author:
+  - name: Mehak Madan
+    email: mehakmadan@uchicago.edu
+    url: https://example.org/
+    affiliations:
+      - id: id1
+        name: "University of Chicago"
+        group: Psychology
+        department: MAPSS
+        address: 1234 Capital St.
+        city: Chicago
+        state: Illinois 
+        country: USA
+        postal-code: 60615
+author-note:
+  disclosures:
+    conflict-of-interest: The authors have no conflicts of interest to disclose.
+abstract: "This document is a template demonstrating the apaquarto format."
+keywords: [keyword1, keyword2, keyword3]
+floatsintext: true
+numbered-lines: false
+suppress-title-page: false
+link-citations: true
+mask: false
+masked-citations:
+  - schneider2012cattell
+  - schneider2015intelligence
+draft-date: false
+lang: en
+language:
+  citation-last-author-separator: "and"
+  citation-masked-author: "Masked Citation"
+  citation-masked-date: "n.d."
+  citation-masked-title: "Masked Title"
+  email: "Email"
+  title-block-author-note: "Author Note"
+  title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
+  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
+  references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
+format:
+  apaquarto-docx: 
+    default: true
+    warning: false   # Suppress warnings in .docx output
+    message: false   # Suppress messages in .docx output
+  apaquarto-html: default
+  apaquarto-typst: 
+    keep-typ: true
+  apaquarto-pdf:
+    documentmode: man
+    keep-tex: true
+execute:
+  warning: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(conflicted)
+library(tidyverse)
+library(flextable)
+library(ftExtra)
+library(knitr)
+library(gridExtra)
+conflicts_prefer(dplyr::filter, .quiet = TRUE)
+conflicts_prefer(flextable::separate_header, .quiet = TRUE)
+```
+
+Being a youth in today's world is not easy. Adolescence is a critical and vulnerable stage of development, shaping an individual’s identity, sense of belonging, and future opportunities. In order to thrive, young people need access to sufficient support that can help mitigate the risks and challenges they face while growing up (Spencer, 2017). 
+
+However, in a society structured by layers of intersectional oppression, the support-to-risk ratio is not equal for all youth. This imbalance is particularly pronounced for Black girls, whose experiences are often compounded by societal bias and systemic inequities (Crenshaw et al., 2015). For example, by the age of 5, Black girls are perceived as more "adult-like" than their same-aged peers, a phenomenon known as adultification bias (Epstein et al., 2017). This bias magnifies their vulnerability to sexual harassment, harsher disciplinary measures in schools, and long-term psychological and educational challenges (González, 2018; Morris, 2016). This systemic marginalization demands intentional and transformative efforts to reimagine the kinds of support Black girls need, focusing on strengths-based initiatives that address their lived realities and nurture their holistic well-being.
+
+The Teen TEE (Talk, Educate, Experience) program is an evidence-based initiative designed to support early adolescent Black girls by fostering a positive environment where they can develop healthy relationships, strong identities, and a sense of community. This strengths-based program provides a space for Black girls to engage in open dialogue, gain education on relevant topics, and participate in hands-on experiences that help them navigate the unique challenges they face. The program aims to create an affirming and empowering space where participants can explore their identities, learn about their cultural heritage, and build resilience in the face of societal pressures.
+
+**The current study** evaluates the efficacy of the Teen TEE program in promoting key outcomes for Black girls, including increased self-esteem, a stronger sense of Black girl identity, and a greater sense of belonging. Specifically, the project looks at how participation in the program influences the development of positive self-concept, the creation of supportive Black girl spaces, and the overall enhancement of belongingness in a society that often marginalizes them. Through this assessment, the project seeks to determine the program’s impact on the personal growth and well-being of Black girls, helping to inform future initiatives that support their empowerment and development.
+
+### Literature Review
+idk insert here
+
+
+
+## Hypotheses
+The current study aims to evaluate the impact of the Teen TEE program in promoting key outcomes among early adolescent Black girls. Specifically, the study focuses on 10 constructs: Ames, SelfCompassion, Emotional Clarity, SelfEsteem, Black Girl Identity, Image Acceptance, Relatedness, Belongingness, Black Girl Space, and CriticalAgency. Each construct represents an important aspect of identity, social well-being, and personal growth for the participants. For each construct, the following hypotheses are proposed:
+
+- Null Hypothesis (H₀): There is no significant difference in pre- and post-intervention scores for each construct.
+- Alternative Hypothesis (H₁): There is a significant difference in pre- and post-intervention scores for each construct.
+
+
+\newpage
+
+# Methodology
+
+## Sample
+
+## Measures
+
+## Procedure
+
+
+\newpage
+
+# Results
+
+The data was collected and scored according to the scoring manual of scales applied. The responses were analysed using paired t-test to analyse and asses the pre and post scores of different scales. The tables and plots below indicate the findings. 
+
+
+Tables:
+
+```{r}
+#| label: reading in data
+#| message: false
+
+# read in data
+results_data <- read_csv("results_data")
+
+results_data$Significance <- format(round(results_data$Significance, 3), nsmall = 3)
+
+#presenting as table
+results_data <- results_data %>% 
+  flextable() %>% 
+  flextable::theme_apa()
+
+results_data
+```
+
+
+
+
+Scale 1: Ames Scale
+
+
+
+```{r}
+#| label: GGPlot Ames Scale
+#| warning: false
+
+tidy.data <- read.csv("tidy_data.csv")
+
+ames1 <- ggplot(tidy.data, aes(x= Time,
+                      y= Ames))+
+  geom_boxplot()+
+  geom_point()+
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Ames Score", 
+       title = "Pre & Post Ames Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+ames2 <- ggplot(tidy.data, aes(x = Time, 
+                      y = Ames, 
+                      group = Name, 
+                      color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Ames Score", 
+       title = "Pre & Post Ames Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+grid.arrange(ames1, ames2, ncol= 2)
+```
+The scores on the Ames scale increased following the Teen TEE intervention, indicating a potential improvement in participants’ responses. To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre- and post-intervention scores. The test results showed a mean difference of [insert mean difference here], but the change was found to be [statistically significant / not statistically significant], with a p-value of [insert p-value here]. Given that the p-value was [less than / greater than] the commonly used threshold of 0.05, we can conclude that the change in Ames scores was [statistically significant / not significant] following the intervention. This suggests that [there was / there was no] meaningful improvement in Ames scores as a result of the Teen TEE intervention.
+
+Scale 2: Self Compassion Scale
+```{r}
+#| label: GGPlot Self Compassion Scale
+#| warning: false
+
+SelfComp1 <- ggplot(tidy.data, aes(x= Time,
+                      y= SelfCompassion))+
+  geom_boxplot()+
+  geom_point()+
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Self Compassion Score", 
+       title = "Pre & Post Self Compassion Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+SelfComp2 <- ggplot(tidy.data, aes(x = Time, 
+                      y = SelfCompassion, 
+                      group = Name, 
+                      color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Self Compassion Score", 
+       title = "Pre & Post Self Compassion Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+grid.arrange(SelfComp1, SelfComp2, ncol= 2)
+```
+
+Scale 3: Emotional Clarity Scale
+```{r}
+#| label: GGPlot Emotional Clarity Scale
+#| warning: false
+
+# Box plot for EmoClarity scores
+emoClarity1 <- ggplot(tidy.data, aes(x = Time,
+                                     y = EmoClarity)) +
+  geom_boxplot() +
+  geom_point() +
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "EmoClarity Score", 
+       title = "Pre & Post EmoClarity Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Scatter + Line plot for EmoClarity scores
+emoClarity2 <- ggplot(tidy.data, aes(x = Time, 
+                                     y = EmoClarity, 
+                                     group = Name, 
+                                     color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "EmoClarity Score", 
+       title = "Pre & Post EmoClarity Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Display both plots side by side
+grid.arrange(emoClarity1, emoClarity2, ncol = 2)
+```
+Scale 4: Self Esteem Scale
+```{r}
+#| label: GGPlot Self Esteem scores Scale
+#| warning: false
+
+# Box plot for Self Esteem scores
+selfEsteem1 <- ggplot(tidy.data, aes(x = Time,
+                                     y = SelfEsteem)) +
+  geom_boxplot() +
+  geom_point() +
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "SelfEsteem Score", 
+       title = "Pre & Post SelfEsteem Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Scatter + Line plot for SelfEsteem scores
+selfEsteem2 <- ggplot(tidy.data, aes(x = Time, 
+                                     y = SelfEsteem, 
+                                     group = Name, 
+                                     color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "SelfEsteem Score", 
+       title = "Pre & Post SelfEsteem Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Display both plots side by side
+grid.arrange(selfEsteem1, selfEsteem2, ncol = 2)
+
+```
+
+```{r}
+#| label: GGPlot Black Girl Id scores Scale
+#| warning: false
+
+# Box plot for Blackgirl ID scores
+BG1 <- ggplot(tidy.data, aes(x = Time,
+                                       y = BlackGirlId)) +
+  geom_boxplot() +
+  geom_point() +
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Blackgirl ID Score", 
+       title = "Pre & Post Blackgirl ID Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Scatter + Line plot for Blackgirl ID scores
+BG2 <- ggplot(tidy.data, aes(x = Time, 
+                                       y = BlackGirlId, 
+                                       group = Name, 
+                                       color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Blackgirl ID Score", 
+       title = "Pre & Post Blackgirl ID Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Display both plots side by side
+grid.arrange(BG1, BG2, ncol = 2)
+```
+
+```{r}
+#| label: GGPlot Img Acceptance scores Scale
+#| warning: false
+
+# Box plot for ImgAcceptance scores
+img_acceptance1 <- ggplot(tidy.data, aes(x = Time,
+                                         y = ImgAcceptance)) +
+  geom_boxplot() +
+  geom_point() +
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "ImgAcceptance Score", 
+       title = "Pre & Post ImgAcceptance Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Scatter + Line plot for ImgAcceptance scores
+img_acceptance2 <- ggplot(tidy.data, aes(x = Time, 
+                                         y = ImgAcceptance, 
+                                         group = Name, 
+                                         color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "ImgAcceptance Score", 
+       title = "Pre & Post ImgAcceptance Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Display both plots side by side
+grid.arrange(img_acceptance1, img_acceptance2, ncol = 2)
+
+```
+
+```{r}
+#| label: GGPlot Relatedness scores Scale
+#| warning: false
+
+# Box plot for Relatedness scores
+relatedness1 <- ggplot(tidy.data, aes(x = Time,
+                                      y = Relatedness)) +
+  geom_boxplot() +
+  geom_point() +
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Relatedness Score", 
+       title = "Pre & Post Relatedness Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Scatter + Line plot for Relatedness scores
+relatedness2 <- ggplot(tidy.data, aes(x = Time, 
+                                      y = Relatedness, 
+                                      group = Name, 
+                                      color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Relatedness Score", 
+       title = "Pre & Post Relatedness Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Display both plots side by side
+grid.arrange(relatedness1, relatedness2, ncol = 2)
+```
+
+```{r}
+#| label: GGPlot Belonging scores Scale
+#| warning: false
+
+# Box plot for Belonging scores
+belonging1 <- ggplot(tidy.data, aes(x = Time,
+                                    y = Belonging)) +
+  geom_boxplot() +
+  geom_point() +
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Belonging Score", 
+       title = "Pre & Post Belonging Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Scatter + Line plot for Belonging scores
+belonging2 <- ggplot(tidy.data, aes(x = Time, 
+                                    y = Belonging, 
+                                    group = Name, 
+                                    color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Belonging Score", 
+       title = "Pre & Post Belonging Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Display both plots side by side
+grid.arrange(belonging1, belonging2, ncol = 2)
+```
+
+```{r}
+#| label: GGPlot Black Girl Space scores Scale
+#| warning: false
+
+# Box plot for BlackGirl Space scores
+blackgirl_space1 <- ggplot(tidy.data, aes(x = Time,
+                                          y = BlackGirlSpace)) +
+  geom_boxplot() +
+  geom_point() +
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "BlackGirl Space Score", 
+       title = "Pre & Post BlackGirl Space Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Scatter + Line plot for BlackGirl Space scores
+blackgirl_space2 <- ggplot(tidy.data, aes(x = Time, 
+                                          y = BlackGirlSpace, 
+                                          group = Name, 
+                                          color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "BlackGirl Space Score", 
+       title = "Pre & Post BlackGirl Space Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Display both plots side by side
+grid.arrange(blackgirl_space1, blackgirl_space2, ncol = 2)
+```
+
+```{r}
+#| label: GGPlot Critical Agency scores Scale
+#| warning: false
+
+# Box plot for Critical Agency scores
+critical_agency1 <- ggplot(tidy.data, aes(x = Time,
+                                          y = CriticalAgency)) +
+  geom_boxplot() +
+  geom_point() +
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Critical Agency Score", 
+       title = "Pre & Post Critical Agency Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Scatter + Line plot for Critical Agency scores
+critical_agency2 <- ggplot(tidy.data, aes(x = Time, 
+                                          y = CriticalAgency, 
+                                          group = Name, 
+                                          color = as.factor(Name))) + 
+  geom_point(size = 3) +   # Scatter plot points
+  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  theme_minimal() + 
+  labs(color = "Participant ID", 
+       x = "Time", 
+       y = "Critical Agency Score", 
+       title = "Pre & Post Critical Agency Scores") +
+  scale_x_discrete(limits = c("Pre", "Post"))
+
+# Display both plots side by side
+grid.arrange(critical_agency1, critical_agency2, ncol = 2)
+```
+
+
+## Descriptive Statistics
+
+Describe the basic characteristics of the primary variables. My ideal is to describe the variables well enough that someone conducting a meta-analysis can include the study without needing to ask for additional information.
+
+<!-- Add Additional Sections as Needed -->
+
+# Discussion
+
+Describe results in non-statistical terms. <!-- Add sections as needed. -->
+
+## Limitations and Future Directions
+
+Every study has limitations. Based on this study, some additional steps might include...
+
+## Conclusion
+
+Describe the main point of the paper.
+
+# References
+
+<!-- References will auto-populate in the refs div below -->
+
+::: {#refs}
+:::
+
+# Appendix
+
+# The Title for Appendix
+
+If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
+
+Tables and figures in the first appendix automatically get the prefix "A", and the numbering starts again at 1. See 
+
+If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
+
