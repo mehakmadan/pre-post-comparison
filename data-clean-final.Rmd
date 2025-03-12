@@ -260,26 +260,9 @@ print(results_data)
 results_data <- results_data %>% 
   setNames(str_replace_all(names(.), "_", " ")) %>% 
   rename_with(~ str_to_title(.)) %>% 
-  mutate(Scale = str_replace_all(Scale, "(?<!^)([A-Z])", " \\1")) 
+  mutate(Scale = str_replace_all(Scale, "(?<!^)([A-Z])", " \\1")) %>% 
+  rename(Significance = `P Value`)
 ```
-
-```{r}
-head(results_data$Scale)
-```
-
-
-
-```{r}
-
-#making the data presentable
-results_data <- results_data %>%
-  rename(Significance = `P Value`) %>%
-  rename("Emotional Clarity" = "Emo Clarity") %>% 
-  rename("Image Acceptance" = "Img Acceptance")
-```
-
-
-
 
 
 ```{r}
