@@ -36,11 +36,11 @@ Submission date: 03.12
 
 Submission number (1-4): 1
 
-Project GitHub repository URL:
+Project GitHub repository URL: https://github.com/mehakmadan/pre-post-comparison.git
 
-Filename of manuscript .qmd:
+Filename of manuscript .qmd: pre-post.qmd
 
-Filename of knitted .pdf:
+Filename of knitted .pdf: pre-post.pdf
 
 
 ## AI Statement

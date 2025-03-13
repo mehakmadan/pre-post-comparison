@@ -622,6 +622,7 @@ Despite these limitations, the results highlight the importance of tailored, str
 
 
 \newpage
+
 # References
 
 
