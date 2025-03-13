@@ -1,50 +1,42 @@
 ---
-title: "Final Research Project: Pre-Post Comparison"
-shorttitle: "Comparison"
+title: "TeenTee: Pre-Post Comparison"
+shorttitle: "Final Research Project"
 author:
   - name: Mehak Madan
+    corresponding: true
     email: mehakmadan@uchicago.edu
-    url: https://example.org/
     affiliations:
       - id: id1
         name: "University of Chicago"
         group: Psychology
         department: MAPSS
-        address: 1234 Capital St.
+        address: 1155 E 60th street
         city: Chicago
         state: Illinois 
         country: USA
-        postal-code: 60615
+        postal-code: 60637
 author-note:
   disclosures:
     conflict-of-interest: The authors have no conflicts of interest to disclose.
-abstract: "This document is a template demonstrating the apaquarto format."
-keywords: [keyword1, keyword2, keyword3]
+    gratitude: "I would like to thank Dr. Onnie Rogers, the prinicpal investigator of TeenTee and Dr. Natalie Dowling for helping me in the coding of the project." 
+abstract: "Black girls often face unique challenges due to the intersecting forms of oppression they face, thus requiring targeted support to navigate these barriers and promote their well-being. The Teen TEE (Talk, Educate, Experience) program is a strengths-based initiative aimed at empowering early adolescent Black girls by fostering identity development, belonging, and community building. The current study evaluates the effectiveness of the Teen TEE program by comparing pre- and post-intervention results on 10 key constructs i.e. Empathy and Sympathy (Ames), Self-Compassion, Emotional Clarity, Self-Esteem, Black Girl Identity, Image Acceptance, Relatedness, Belongingness, Black Girl Space, and Critical Agency. Findings reveal a significant increase in belonging and the creation of supportive Black girl spaces pre and post intervention, while no other scales showed significant changes."
+keywords: [Black girls, Intersectionality, Identity development, Belongingness, Black Girl Space]
 floatsintext: true
 numbered-lines: false
+bibliography: "teentee.bib"
 suppress-title-page: false
 link-citations: true
 mask: false
-masked-citations:
-  - schneider2012cattell
-  - schneider2015intelligence
 draft-date: false
 lang: en
 language:
-  citation-last-author-separator: "and"
-  citation-masked-author: "Masked Citation"
-  citation-masked-date: "n.d."
-  citation-masked-title: "Masked Title"
   email: "Email"
-  title-block-author-note: "Author Note"
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
-  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
-  references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
 format:
   apaquarto-docx: 
     default: true
-    warning: false   # Suppress warnings in .docx output
-    message: false   # Suppress messages in .docx output
+    warning: false  
+    message: false  
   apaquarto-html: default
   apaquarto-typst: 
     keep-typ: true
@@ -59,6 +51,15 @@ execute:
 #| label: setup
 #| include: false
 
+#install packages
+# install.packages("conflicted")
+# install.packages("tidyverse")
+# install.packages("flextable")
+# install.packages("ftExtra")
+# install.packages("knitr")
+# install.packages("gridExtra")
+
+#load oackages
 library(conflicted)
 library(tidyverse)
 library(flextable)
@@ -69,21 +70,19 @@ conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 ```
 
-Being a youth in today's world is not easy. Adolescence is a critical and vulnerable stage of development, shaping an individual’s identity, sense of belonging, and future opportunities. In order to thrive, young people need access to sufficient support that can help mitigate the risks and challenges they face while growing up (Spencer, 2017). 
+Being a youth in today's world is not easy. According to @erikson_identity_1968, Adolescence is a critical and vulnerable stage of development, shaping an individual’s identity, sense of belonging, and future opportunities. In order to thrive, young people need access to sufficient support that can help mitigate the risks and challenges they face while growing up [@hope_civic_2017].
 
-However, in a society structured by layers of intersectional oppression, the support-to-risk ratio is not equal for all youth. This imbalance is particularly pronounced for Black girls, whose experiences are often compounded by societal bias and systemic inequities (Crenshaw et al., 2015). For example, by the age of 5, Black girls are perceived as more "adult-like" than their same-aged peers, a phenomenon known as adultification bias (Epstein et al., 2017). This bias magnifies their vulnerability to sexual harassment, harsher disciplinary measures in schools, and long-term psychological and educational challenges (González, 2018; Morris, 2016). This systemic marginalization demands intentional and transformative efforts to reimagine the kinds of support Black girls need, focusing on strengths-based initiatives that address their lived realities and nurture their holistic well-being.
+However, in a society structured by layers of intersectional oppression, the support-to-risk ratio is not equal for all youth. This imbalance is particularly pronounced for Black girls, whose experiences are often compounded by societal bias and systemic inequities [@crenshaw_black_2015]. For example, by the age of 5, Black girls are perceived as more "adult-like" than their same-aged peers, a phenomenon known as adultification bias (Epstein et al., 2017). This bias magnifies their vulnerability to sexual harassment, harsher disciplinary measures in schools, and long-term psychological and educational challenges [@gonzalez_classroom_2018; @morris_vocational_2016]. This systemic marginalization demands intentional and transformative efforts to reimagine the kinds of support Black girls need, focusing on strengths-based initiatives that address their lived realities and nurture their holistic well-being.
 
-The Teen TEE (Talk, Educate, Experience) program is an evidence-based initiative designed to support early adolescent Black girls by fostering a positive environment where they can develop healthy relationships, strong identities, and a sense of community. This strengths-based program provides a space for Black girls to engage in open dialogue, gain education on relevant topics, and participate in hands-on experiences that help them navigate the unique challenges they face. The program aims to create an affirming and empowering space where participants can explore their identities, learn about their cultural heritage, and build resilience in the face of societal pressures.
+The Teen TEE (Talk, Educate, Experience) [^1] program is an evidence-based initiative designed to support early adolescent Black girls by fostering a positive environment where they can develop healthy relationships, strong identities, and a sense of community. This strengths-based program provides a space for Black girls to engage in open dialogue, gain education on relevant topics, and participate in hands-on experiences that help them navigate the unique challenges they face. The program aims to create an affirming and empowering space where participants can explore their identities, learn about their cultural heritage, and build resilience in the face of societal pressures.
+
+[^1]: project started by Dr. Onnie Rogers and Gloria Dotson-Lewis
 
 **The current study** evaluates the efficacy of the Teen TEE program in promoting key outcomes for Black girls, including increased self-esteem, a stronger sense of Black girl identity, and a greater sense of belonging. Specifically, the project looks at how participation in the program influences the development of positive self-concept, the creation of supportive Black girl spaces, and the overall enhancement of belongingness in a society that often marginalizes them. Through this assessment, the project seeks to determine the program’s impact on the personal growth and well-being of Black girls, helping to inform future initiatives that support their empowerment and development.
 
-### Literature Review
-idk insert here
-
-
 
 ## Hypotheses
-The current study aims to evaluate the impact of the Teen TEE program in promoting key outcomes among early adolescent Black girls. Specifically, the study focuses on 10 constructs: Ames, SelfCompassion, Emotional Clarity, SelfEsteem, Black Girl Identity, Image Acceptance, Relatedness, Belongingness, Black Girl Space, and CriticalAgency. Each construct represents an important aspect of identity, social well-being, and personal growth for the participants. For each construct, the following hypotheses are proposed:
+The current study aims to evaluate the impact of the Teen TEE program in promoting key outcomes among early adolescent Black girls. Specifically, the study focuses on 10 constructs: Empathy and Symapthy, Self Compassion, Emotional Clarity, Self Esteem, Black Girl Identity, Image Acceptance, Relatedness, Belongingness, Black Girl Space, and Critical Agency. Each construct represents an important aspect of identity, social well-being, and personal growth for the participants. For each construct, the following hypotheses are proposed:
 
 - Null Hypothesis (H₀): There is no significant difference in pre- and post-intervention scores for each construct.
 - Alternative Hypothesis (H₁): There is a significant difference in pre- and post-intervention scores for each construct.
@@ -94,47 +93,63 @@ The current study aims to evaluate the impact of the Teen TEE program in promoti
 # Methodology
 
 ## Sample
+The study sample consists of 15 Black girls, aged 11-14 years old (6th-8th grade), who participated in the Teen TEE (Talk, Educate, Experience) program. Data was collected during the 2023-2024 academic year across two program cycles (Spring and Fall). Participation was voluntary, and parental consent and youth assent were obtained. The study was conducted in a school setting, with program sessions held after school hours. To support engagement, participants were provided with snacks during each session.
 
-## Measures
+## Study Design & Measures
+This study employs a pre-post intervention design to assess changes in key psychological and identity-related constructs before and after participation in the Teen TEE program. Each participant completed self-report measures at two time points: before (pre) and after (post) the program. Data collection occurred across both program cycles, capturing changes in participant outcomes over the course of the intervention.
+
+To ensure the measures were relevant to the experiences of Black girls, full standardized scales were not used. Instead, selected items from ten established psychological measures were adapted to create a customized assessment tool. This tool included questions specifically relevant to Black girl identity, self-concept, and belonging, forming a structured interview schedule tailored to the study’s objectives. The constructs assessed included:
+
+1. Empathy and Sympathy (items adapted from the Adolescent Measure of Empathy and Sympathy (AMES) by @vossen_development_2015)
+2. Self Compassion (items adapted from the Self-Compassion Scale Youth Version by @neff_development_2021)
+3. Emotional Clarity (items created for Teen TEE)
+4. Self Esteem (items adapted from the Rosenberg Self-Esteem scale by @rosenberg_rosenberg_1965)
+5. Black Girl Identity (items adapted from the ERI measure of identity exploration and resolution by @umana-taylor_developing_2004)
+6. Image Acceptance (items adapted from the Image Acceptance Measure (I AM) colorism scale by @plybon_image_2003)
+7. Relatedness (items adapted from The Youth Relatedness Scale by @deloia_youth_2012)
+8. Belonging (items adapted from the Simple School Belonging Scale (SSBS) by @whiting_simple_2018)
+9. Black Girl Space (items created for Teen TEE)
+10. Critical Agency (items adapted from the Measure of Adolescent Critical Consciousness (MACC) scale by @mcwhirter_critical_nodate)
+
+This approach ensured that the assessment was both culturally responsive and developmentally appropriate for the participants, aligning with the unique experiences of Black girls and the goals of the Teen TEE program.
 
 ## Procedure
-
+Participants completed the pre-intervention survey at the beginning of the program. The Teen TEE program ran for a specified 10-week duration, incorporating discussions, educational sessions, and experiential activities. Upon program completion, participants completed the post-intervention survey to assess changes in the measured constructs. Data was collected in paper format and then entered in Qualtrics by research assistants.
 
 \newpage
 
 # Results
 
-The data was collected and scored according to the scoring manual of scales applied. The responses were analysed using paired t-test to analyse and asses the pre and post scores of different scales. The tables and plots below indicate the findings. 
+The data was collected and scored according to the scoring manual of scales applied. The responses were analysed using paired T-Test to analyse and asses the pre and post scores of different scales. The tables and plots below indicate the findings. 
 
 
-Tables:
+Table 1: Paired T-Test Results for Key Constructs
 
 ```{r}
-#| label: reading in data
+#| label: t1
 #| message: false
 
 # read in data
 results_data <- read_csv("results_data")
+results_data$"Pre Mean" <- round(results_data$"Pre Mean", 2)
+results_data$"Post Mean" <- round(results_data$"Post Mean", 2)
 
 results_data$Significance <- format(round(results_data$Significance, 3), nsmall = 3)
 
 #presenting as table
-results_data <- results_data %>% 
+results_data1 <- results_data %>% 
   flextable() %>% 
   flextable::theme_apa()
 
-results_data
+results_data1
 ```
 
 
-
-
-Scale 1: Ames Scale
-
-
+\newpage
+*Plot 1:* 
 
 ```{r}
-#| label: GGPlot Ames Scale
+#| label: Figure1
 #| warning: false
 
 tidy.data <- read.csv("tidy_data.csv")
@@ -142,13 +157,13 @@ tidy.data <- read.csv("tidy_data.csv")
 ames1 <- ggplot(tidy.data, aes(x= Time,
                       y= Ames))+
   geom_boxplot()+
-  geom_point()+
+  geom_point(aes(color = as.factor(Name)))+
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Ames Score", 
-       title = "Pre & Post Ames Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "Ames Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 ames2 <- ggplot(tidy.data, aes(x = Time, 
                       y = Ames, 
@@ -159,15 +174,16 @@ ames2 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Ames Score", 
-       title = "Pre & Post Ames Scores") +
+       y = "Ames Score") +
   scale_x_discrete(limits = c("Pre", "Post"))
 
-grid.arrange(ames1, ames2, ncol= 2)
+grid.arrange(ames1, ames2, ncol= 2, 
+             top = "Pre & Post Ames Scores")
 ```
-The scores on the Ames scale increased following the Teen TEE intervention, indicating a potential improvement in participants’ responses. To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre- and post-intervention scores. The test results showed a mean difference of [insert mean difference here], but the change was found to be [statistically significant / not statistically significant], with a p-value of [insert p-value here]. Given that the p-value was [less than / greater than] the commonly used threshold of 0.05, we can conclude that the change in Ames scores was [statistically significant / not significant] following the intervention. This suggests that [there was / there was no] meaningful improvement in Ames scores as a result of the Teen TEE intervention.
+**For the construct of Empathy and Sympathy (Ames),** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Ames"] > results_data$"Pre Mean"[results_data$Scale == "Ames"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Ames"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Ames"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values was calculated. (p = `r results_data$"Significance"[results_data$Scale == "Ames"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Ames"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Ames"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Ames"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
-Scale 2: Self Compassion Scale
+\newpage
+*Plot 2:*
 ```{r}
 #| label: GGPlot Self Compassion Scale
 #| warning: false
@@ -175,13 +191,14 @@ Scale 2: Self Compassion Scale
 SelfComp1 <- ggplot(tidy.data, aes(x= Time,
                       y= SelfCompassion))+
   geom_boxplot()+
-  geom_point()+
+  geom_point(aes(color = as.factor(Name)))+
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "Self Compassion Score", 
        title = "Pre & Post Self Compassion Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 SelfComp2 <- ggplot(tidy.data, aes(x = Time, 
                       y = SelfCompassion, 
@@ -198,8 +215,13 @@ SelfComp2 <- ggplot(tidy.data, aes(x = Time,
 
 grid.arrange(SelfComp1, SelfComp2, ncol= 2)
 ```
+**For the construct of Self Compassion,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Self Compassion"] > results_data$"Pre Mean"[results_data$Scale == "Self Compassion"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Self Compassion"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Self Compassion"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention scores, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Self Compassion"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Self Compassion"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Self Compassion"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Self Compassion"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
-Scale 3: Emotional Clarity Scale
+
+
+\newpage
+*Plot 3:*
+
 ```{r}
 #| label: GGPlot Emotional Clarity Scale
 #| warning: false
@@ -208,13 +230,14 @@ Scale 3: Emotional Clarity Scale
 emoClarity1 <- ggplot(tidy.data, aes(x = Time,
                                      y = EmoClarity)) +
   geom_boxplot() +
-  geom_point() +
+  geom_point(aes(color = as.factor(Name))) +
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "EmoClarity Score", 
        title = "Pre & Post EmoClarity Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 # Scatter + Line plot for EmoClarity scores
 emoClarity2 <- ggplot(tidy.data, aes(x = Time, 
@@ -233,7 +256,11 @@ emoClarity2 <- ggplot(tidy.data, aes(x = Time,
 # Display both plots side by side
 grid.arrange(emoClarity1, emoClarity2, ncol = 2)
 ```
-Scale 4: Self Esteem Scale
+**For the construct of Emotional Clarity,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Emo Clarity"] > results_data$"Pre Mean"[results_data$Scale == "Emo Clarity"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Emo Clarity"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Emo Clarity"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention scores, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Emo Clarity"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Emo Clarity"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Emo Clarity"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Emo Clarity"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
+
+
+\newpage
+*Plot 4:*
 ```{r}
 #| label: GGPlot Self Esteem scores Scale
 #| warning: false
@@ -242,13 +269,14 @@ Scale 4: Self Esteem Scale
 selfEsteem1 <- ggplot(tidy.data, aes(x = Time,
                                      y = SelfEsteem)) +
   geom_boxplot() +
-  geom_point() +
+  geom_point(aes(color = as.factor(Name))) +
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "SelfEsteem Score", 
        title = "Pre & Post SelfEsteem Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 # Scatter + Line plot for SelfEsteem scores
 selfEsteem2 <- ggplot(tidy.data, aes(x = Time, 
@@ -269,6 +297,12 @@ grid.arrange(selfEsteem1, selfEsteem2, ncol = 2)
 
 ```
 
+**For the construct of "Self Esteem" (Ames),** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Self Esteem"] > results_data$"Pre Mean"[results_data$Scale == "Self Esteem"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Self Esteem"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Self Esteem"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated (p = `r results_data$"Significance"[results_data$Scale == "Self Esteem"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Self Esteem"] < 0.05) "less than" else "greater than"` than 0.05, i.e., the results are `r if(results_data$"Significance"[results_data$Scale == "Self Esteem"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Self Esteem"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
+
+
+\newpage
+*Plot 5: *
+
 ```{r}
 #| label: GGPlot Black Girl Id scores Scale
 #| warning: false
@@ -277,13 +311,14 @@ grid.arrange(selfEsteem1, selfEsteem2, ncol = 2)
 BG1 <- ggplot(tidy.data, aes(x = Time,
                                        y = BlackGirlId)) +
   geom_boxplot() +
-  geom_point() +
+  geom_point(aes(color = as.factor(Name))) +
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "Blackgirl ID Score", 
        title = "Pre & Post Blackgirl ID Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 # Scatter + Line plot for Blackgirl ID scores
 BG2 <- ggplot(tidy.data, aes(x = Time, 
@@ -302,7 +337,12 @@ BG2 <- ggplot(tidy.data, aes(x = Time,
 # Display both plots side by side
 grid.arrange(BG1, BG2, ncol = 2)
 ```
+**For the construct of "Black Girl Id" (Ames),** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Black Girl Id"] > results_data$"Pre Mean"[results_data$Scale == "Black Girl Id"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Black Girl Id"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Black Girl Id"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated (p = `r results_data$"Significance"[results_data$Scale == "Black Girl Id"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Black Girl Id"] < 0.05) "less than" else "greater than"` than 0.05, i.e., the results are `r if(results_data$"Significance"[results_data$Scale == "Black Girl Id"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Black Girl Id"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the  intervention.
 
+
+
+\newpage
+*Plot 6:*
 ```{r}
 #| label: GGPlot Img Acceptance scores Scale
 #| warning: false
@@ -311,13 +351,14 @@ grid.arrange(BG1, BG2, ncol = 2)
 img_acceptance1 <- ggplot(tidy.data, aes(x = Time,
                                          y = ImgAcceptance)) +
   geom_boxplot() +
-  geom_point() +
+  geom_point(aes(color = as.factor(Name))) +
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "ImgAcceptance Score", 
        title = "Pre & Post ImgAcceptance Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 # Scatter + Line plot for ImgAcceptance scores
 img_acceptance2 <- ggplot(tidy.data, aes(x = Time, 
@@ -338,6 +379,11 @@ grid.arrange(img_acceptance1, img_acceptance2, ncol = 2)
 
 ```
 
+**For the construct of Image Acceptance,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Img Acceptance"] > results_data$"Pre Mean"[results_data$Scale == "Img Acceptance"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Img Acceptance"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Img Acceptance"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Img Acceptance"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Img Acceptance"] < 0.05) "less than" else "greater than"` than 0.05, i.e., the results are `r if(results_data$"Significance"[results_data$Scale == "Img Acceptance"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Img Acceptance"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
+
+
+\newpage
+*Plot 7:*
 ```{r}
 #| label: GGPlot Relatedness scores Scale
 #| warning: false
@@ -346,13 +392,14 @@ grid.arrange(img_acceptance1, img_acceptance2, ncol = 2)
 relatedness1 <- ggplot(tidy.data, aes(x = Time,
                                       y = Relatedness)) +
   geom_boxplot() +
-  geom_point() +
+  geom_point(aes(color = as.factor(Name))) +
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "Relatedness Score", 
        title = "Pre & Post Relatedness Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 # Scatter + Line plot for Relatedness scores
 relatedness2 <- ggplot(tidy.data, aes(x = Time, 
@@ -371,7 +418,10 @@ relatedness2 <- ggplot(tidy.data, aes(x = Time,
 # Display both plots side by side
 grid.arrange(relatedness1, relatedness2, ncol = 2)
 ```
+**For the construct of Relatedness,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Relatedness"] > results_data$"Pre Mean"[results_data$Scale == "Relatedness"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Relatedness"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Relatedness"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Relatedness"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Relatedness"] < 0.05) "less than" else "greater than"` than 0.05, i.e., the results are `r if(results_data$"Significance"[results_data$Scale == "Relatedness"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Relatedness"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
+\newpage
+*Plot 8:*
 ```{r}
 #| label: GGPlot Belonging scores Scale
 #| warning: false
@@ -380,13 +430,14 @@ grid.arrange(relatedness1, relatedness2, ncol = 2)
 belonging1 <- ggplot(tidy.data, aes(x = Time,
                                     y = Belonging)) +
   geom_boxplot() +
-  geom_point() +
+  geom_point(aes(color = as.factor(Name))) +
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "Belonging Score", 
        title = "Pre & Post Belonging Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 # Scatter + Line plot for Belonging scores
 belonging2 <- ggplot(tidy.data, aes(x = Time, 
@@ -406,6 +457,11 @@ belonging2 <- ggplot(tidy.data, aes(x = Time,
 grid.arrange(belonging1, belonging2, ncol = 2)
 ```
 
+**For the construct of Belonging,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Belonging"] > results_data$"Pre Mean"[results_data$Scale == "Belonging"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Belonging"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Belonging"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Belonging"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Belonging"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Belonging"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Belonging"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
+
+
+\newpage
+*Plot 9:*
 ```{r}
 #| label: GGPlot Black Girl Space scores Scale
 #| warning: false
@@ -414,13 +470,14 @@ grid.arrange(belonging1, belonging2, ncol = 2)
 blackgirl_space1 <- ggplot(tidy.data, aes(x = Time,
                                           y = BlackGirlSpace)) +
   geom_boxplot() +
-  geom_point() +
+  geom_point(aes(color = as.factor(Name))) +
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "BlackGirl Space Score", 
        title = "Pre & Post BlackGirl Space Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 # Scatter + Line plot for BlackGirl Space scores
 blackgirl_space2 <- ggplot(tidy.data, aes(x = Time, 
@@ -439,7 +496,11 @@ blackgirl_space2 <- ggplot(tidy.data, aes(x = Time,
 # Display both plots side by side
 grid.arrange(blackgirl_space1, blackgirl_space2, ncol = 2)
 ```
+**For the construct of Black Girl Space,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Black Girl Space"] > results_data$"Pre Mean"[results_data$Scale == "Black Girl Space"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Black Girl Space"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Black Girl Space"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Black Girl Space"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Black Girl Space"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Black Girl Space"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Black Girl Space"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
+
+\newpage
+*Plot 10:*
 ```{r}
 #| label: GGPlot Critical Agency scores Scale
 #| warning: false
@@ -448,13 +509,14 @@ grid.arrange(blackgirl_space1, blackgirl_space2, ncol = 2)
 critical_agency1 <- ggplot(tidy.data, aes(x = Time,
                                           y = CriticalAgency)) +
   geom_boxplot() +
-  geom_point() +
+  geom_point(aes(color = as.factor(Name))) +
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
        y = "Critical Agency Score", 
        title = "Pre & Post Critical Agency Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  guides(color = "none")
 
 # Scatter + Line plot for Critical Agency scores
 critical_agency2 <- ggplot(tidy.data, aes(x = Time, 
@@ -475,38 +537,26 @@ grid.arrange(critical_agency1, critical_agency2, ncol = 2)
 ```
 
 
-## Descriptive Statistics
+**For the construct of Critical Agency,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Critical Agency"] > results_data$"Pre Mean"[results_data$Scale == "Critical Agency"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Critical Agency"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Critical Agency"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated (p = `r results_data$"Significance"[results_data$Scale == "Critical Agency"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
-Describe the basic characteristics of the primary variables. My ideal is to describe the variables well enough that someone conducting a meta-analysis can include the study without needing to ask for additional information.
 
-<!-- Add Additional Sections as Needed -->
 
 # Discussion
 
-Describe results in non-statistical terms. <!-- Add sections as needed. -->
-
-## Limitations and Future Directions
-
-Every study has limitations. Based on this study, some additional steps might include...
+ 
 
 ## Conclusion
 
-Describe the main point of the paper.
+Describe the main point of the paper. 
 
+
+\newpage
 # References
 
-<!-- References will auto-populate in the refs div below -->
 
 ::: {#refs}
 :::
 
 # Appendix
 
-# The Title for Appendix
-
-If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
-
-Tables and figures in the first appendix automatically get the prefix "A", and the numbering starts again at 1. See 
-
-If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
 
