@@ -36,13 +36,15 @@ format:
   apaquarto-docx: 
     default: true
     warning: false  
-    message: false  
+    message: false
   apaquarto-html: default
   apaquarto-typst: 
     keep-typ: true
+    toc: true
   apaquarto-pdf:
     documentmode: man
-    keep-tex: true
+    dontrepeattitle: false
+    suppress-title-introduction: false
 execute:
   warning: false
 ---
@@ -58,6 +60,7 @@ execute:
 # install.packages("ftExtra")
 # install.packages("knitr")
 # install.packages("gridExtra")
+# install.packages("forcats")
 
 #load oackages
 library(conflicted)
@@ -66,13 +69,14 @@ library(flextable)
 library(ftExtra)
 library(knitr)
 library(gridExtra)
+library(forcats)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 ```
 
 Being a youth in today's world is not easy. According to @erikson_identity_1968, Adolescence is a critical and vulnerable stage of development, shaping an individual’s identity, sense of belonging, and future opportunities. In order to thrive, young people need access to sufficient support that can help mitigate the risks and challenges they face while growing up [@hope_civic_2017].
 
-However, in a society structured by layers of intersectional oppression, the support-to-risk ratio is not equal for all youth. This imbalance is particularly pronounced for Black girls, whose experiences are often compounded by societal bias and systemic inequities [@crenshaw_black_2015]. For example, by the age of 5, Black girls are perceived as more "adult-like" than their same-aged peers, a phenomenon known as adultification bias (Epstein et al., 2017). This bias magnifies their vulnerability to sexual harassment, harsher disciplinary measures in schools, and long-term psychological and educational challenges [@gonzalez_classroom_2018; @morris_vocational_2016]. This systemic marginalization demands intentional and transformative efforts to reimagine the kinds of support Black girls need, focusing on strengths-based initiatives that address their lived realities and nurture their holistic well-being.
+However, in a society structured by layers of intersectional oppression, the support-to-risk ratio is not equal for all youth. This imbalance is particularly pronounced for Black girls, whose experiences are often compounded by societal bias and systemic inequities [@crenshaw_black_2015]. For example, by the age of 5, Black girls are perceived as more "adult-like" than their same-aged peers, a phenomenon known as adultification bias [@gonzalez_classroom_2018. This bias magnifies their vulnerability to sexual harassment, harsher disciplinary measures in schools, and long-term psychological and educational challenges [@gonzalez_classroom_2018; @morris_vocational_2016]. This systemic marginalization demands intentional and transformative efforts to reimagine the kinds of support Black girls need, focusing on strengths-based initiatives that address their lived realities and nurture their holistic well-being.
 
 The Teen TEE (Talk, Educate, Experience) [^1] program is an evidence-based initiative designed to support early adolescent Black girls by fostering a positive environment where they can develop healthy relationships, strong identities, and a sense of community. This strengths-based program provides a space for Black girls to engage in open dialogue, gain education on relevant topics, and participate in hands-on experiences that help them navigate the unique challenges they face. The program aims to create an affirming and empowering space where participants can explore their identities, learn about their cultural heritage, and build resilience in the face of societal pressures.
 
@@ -126,7 +130,7 @@ The data was collected and scored according to the scoring manual of scales appl
 Table 1: Paired T-Test Results for Key Constructs
 
 ```{r}
-#| label: t1
+#| label: tbl-results1
 #| message: false
 
 # read in data
@@ -581,9 +585,7 @@ grid.arrange(critical_agency1, critical_agency2, ncol = 2,
  
 
 ## Conclusion
-The current study wanted to look at the impact of strength based programs such as Teen TEE on several psychological and identity-related constructs among Black girls. For the chosen 10 constructs, scores were collected pre and post intervention. Results showed that although there was a positive increase in all constructs, only two had significant differences i.e **Belonging** and **Black Girl Space**. This suggests that the program significantly fostered a stronger sense of community and affirmation among participants. [^2]
-
-[2]:  This conclusion is based on the findings of the current study. If future results differ, the conclusion should be revised accordingly. 
+The current study wanted to look at the impact of strength based programs such as Teen TEE on several psychological and identity-related constructs among Black girls. For the chosen 10 constructs, scores were collected pre and post intervention. As @tbl-results1 shows, that although there was a positive increase in all constructs, only two had significant differences i.e **Belonging** and **Black Girl Space**. This suggests that the program significantly fostered a stronger sense of community and affirmation among participants.
 
 ```{r}
 #| label: Facet Wrap
@@ -594,7 +596,10 @@ results_long <- results_data %>%
     names_to = "Time",
     values_to = "MeanScore"
   ) %>%
-  mutate(Time = factor(Time, levels = c("Pre Mean", "Post Mean")))
+  mutate(Time = as.factor(Time)) %>%
+  mutate(Time = fct_relevel(Time, "Pre Mean", "Post Mean")) %>% 
+  mutate(Time = fct_recode(Time, "Pre Avg" = "Pre Mean", "Post Avg" = "Post Mean"))
+  
 
 # Create the faceted plot
 ggplot(results_long, aes(x = Time, y = MeanScore, fill = Time)) +
@@ -604,9 +609,9 @@ ggplot(results_long, aes(x = Time, y = MeanScore, fill = Time)) +
        x = "Time",
        y = "Mean Score",
        fill = "Time") +
-  scale_x_discrete(labels = NULL) +
   theme_minimal()+
-  scale_fill_manual(values = c("Pre Mean" = "pink", "Post Mean" = "lightblue")) +
+  scale_x_discrete(labels = NULL) +
+  scale_fill_manual(values = c("Pre Avg" = "pink", "Post Avg" = "lightblue")) +
   theme(
     plot.title = element_text(face = "bold"),   
     axis.title.x = element_text(face = "bold"),  
@@ -616,7 +621,9 @@ ggplot(results_long, aes(x = Time, y = MeanScore, fill = Time)) +
 
 However, most constructs showed no significant differences. This could be because of several limiations which should be considered when interpreting the results of this study. First, most constructs showed no significant differences, which could be attributed to the small sample size. A larger sample would provide more reliable data and better insights into the effectiveness of the Teen TEE program. Second, the reliance on quantitative data may not fully capture the complexity of the constructs being assessed. Incorporating qualitative methods, such as interviews, could provide a more comprehensive understanding of how these constructs are experienced and enhanced in the participants' lives. Additionally, the constructs were not fully assessed: questions were handpicked to suit the needs which could affect the validity and reliability of the constructs.  
 
-Despite these limitations, the results highlight the importance of tailored, strengths-based approaches that address the unique challenges faced by Black girls and underscore the potential of community-building initiatives in promoting positive identity development and resilience. Future research should aim to enhance the program's impact on personal constructs and explore its long-term effects.
+Despite these limitations, the results highlight the importance of tailored, strengths-based approaches that address the unique challenges faced by Black girls and underscore the potential of community-building initiatives in promoting positive identity development and resilience. Future research should aim to enhance the program's impact on personal constructs and explore its long-term effects. [^2]
+
+[^2]:This conclusion is based on the findings of the current study. If future results differ, the conclusion should be revised accordingly. 
 
 
 
