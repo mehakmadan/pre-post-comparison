@@ -126,13 +126,11 @@ Participants completed the pre-intervention survey at the beginning of the progr
 
 The data was collected and scored according to the scoring manual of scales applied. The responses were analysed using paired T-Test to analyse and asses the pre and post scores of different scales. The tables and plots below indicate the findings. 
 
-
 Table 1: Paired T-Test Results for Key Constructs
-
 ```{r}
-#| label: tbl-results1
+#| label: tbl12
 #| message: false
-
+ 
 # read in data
 results_data <- read_csv("results_data")
 results_data$"Pre Mean" <- round(results_data$"Pre Mean", 2)
@@ -140,14 +138,12 @@ results_data$"Post Mean" <- round(results_data$"Post Mean", 2)
 
 results_data$Significance <- format(round(results_data$Significance, 3), nsmall = 3)
 
-#presenting as table
 results_data1 <- results_data %>% 
   flextable() %>% 
   flextable::theme_apa()
 
 results_data1
 ```
-
 
 \newpage
 *Plot 1:* 
@@ -582,10 +578,8 @@ grid.arrange(critical_agency1, critical_agency2, ncol = 2,
 **For the construct of Critical Agency,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Critical Agency"] > results_data$"Pre Mean"[results_data$Scale == "Critical Agency"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Critical Agency"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Critical Agency"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated (p = `r results_data$"Significance"[results_data$Scale == "Critical Agency"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
 
- 
-
 ## Conclusion
-The current study wanted to look at the impact of strength based programs such as Teen TEE on several psychological and identity-related constructs among Black girls. For the chosen 10 constructs, scores were collected pre and post intervention. As @tbl-results1 shows, that although there was a positive increase in all constructs, only two had significant differences i.e **Belonging** and **Black Girl Space**. This suggests that the program significantly fostered a stronger sense of community and affirmation among participants.
+The current study wanted to look at the impact of strength based programs such as Teen TEE on several psychological and identity-related constructs among Black girls. For the chosen 10 constructs, scores were collected pre and post intervention. As @tbl12 shows, that although there was a positive increase in all constructs, only two had significant differences i.e **Belonging** and **Black Girl Space**. This suggests that the program significantly fostered a stronger sense of community and affirmation among participants.
 
 ```{r}
 #| label: Facet Wrap
