@@ -1,28 +1,20 @@
 ---
-title: "data-clean-final"
+title: "data clean sum"
 output: html_document
 ---
 
 ```{r}
-#install packages
-# install.packages("tidyverse")
-# install.packages("readr")
-# install.packages("dplyr")
-
-#load packages
 library(tidyverse)
-library(readr)
+library(readxl)
 library(dplyr)
-
-#set seed
 set.seed(1234)
 ```
 
 ```{r}
 #| label: read-messy-data
 
-all.pre.data <- read_csv("TTPreDATA.csv")
-all.post.data <- read_csv("TTPostDATA.csv")
+all.pre.data <- read_csv("/Users/mac/Downloads/TTPreDATA.csv")
+all.post.data <- read_csv("/Users/mac/Downloads/TTPostDATA.csv")
 ```
 
 ```{r}
@@ -224,52 +216,41 @@ pre.post.data <- pre.post.data %>%
   arrange(Participant_Id)
 ```
 
-
 ```{r}
+# Perform paired t-tests for all 10 aspects and store results
+tests <- list(
+  Ames = t.test(pre.post.data$Total.Pre.Ames, pre.post.data$Total.Post.Ames, paired = TRUE),
+  SelfCompassion = t.test(pre.post.data$Total.Pre.SelfCompassion, pre.post.data$Total.Post.SelfCompassion, paired = TRUE),
+  EmoClarity = t.test(pre.post.data$Total.Pre.EmoClarity, pre.post.data$Total.Post.EmoClarity, paired = TRUE),
+  SelfEsteem = t.test(pre.post.data$Total.Pre.SelfEsteem, pre.post.data$Total.Post.SelfEsteem, paired = TRUE),
+  BlackGirlId = t.test(pre.post.data$Total.Pre.BlackGirlId, pre.post.data$Total.Post.BlackGirlId, paired = TRUE),
+  ImgAcceptance = t.test(pre.post.data$Total.Pre.ImgAcceptance, pre.post.data$Total.Post.ImgAcceptance, paired = TRUE),
+  Relatedness = t.test(pre.post.data$Total.Pre.Relatedness, pre.post.data$Total.Post.Relatedness, paired = TRUE),
+  Belonging = t.test(pre.post.data$Total.Pre.Belonging, pre.post.data$Total.Post.Belonging, paired = TRUE),
+  BlackGirlSpace = t.test(pre.post.data$Total.Pre.BlackGirlSpace, pre.post.data$Total.Post.BlackGirlSpace, paired = TRUE),
+  CriticalAgency = t.test(pre.post.data$Total.Pre.CriticalAgency, pre.post.data$Total.Post.CriticalAgency, paired = TRUE)
+)
 
-# Performing paired t-tests and storing results in a data frame
-
-# Define the list of scale names
-scales <- c("Ames", "SelfCompassion", "EmoClarity", "SelfEsteem", 
-            "BlackGirlId", "ImgAcceptance", "Relatedness", 
-            "Belonging", "BlackGirlSpace", "CriticalAgency")
-
-# Create an empty data frame to store results
-results_data <- data.frame(Scale = character(), 
-                           pre_mean = numeric(), 
-                           post_mean = numeric(), 
-                           p_value = numeric())
-
-# Loop over each scale, perform paired t-test, and store results
-for (scale in scales) {
-  pre_column <- paste0("Total.Pre.", scale)
-  post_column <- paste0("Total.Post.", scale)
+# Print results and check if post-test scores increased
+for (name in names(tests)) {
+  cat("\n", name, "t-test:\n")
+  print(tests[[name]])
   
-  # Calculate the means for pre and post
-  pre_mean_scores <- mean(pre.post.data[[pre_column]], na.rm = TRUE)
-  post_mean_scores <- mean(pre.post.data[[post_column]], na.rm = TRUE)
+  p_value <- tests[[name]]$p.value
+  mean_diff <- mean(pre.post.data[[paste0("Total.Post.", name)]], na.rm = TRUE) - 
+               mean(pre.post.data[[paste0("Total.Pre.", name)]], na.rm = TRUE)
   
-  # Perform the paired t-test
-  t_test <- t.test(pre.post.data[[pre_column]], pre.post.data[[post_column]], paired = TRUE)
-  
-  # Store the results in the data frame
-  results_data <- results_data %>%
-    add_row(Scale = scale, 
-            pre_mean = pre_mean_scores, 
-            post_mean = post_mean_scores, 
-            p_value = t_test$p.value) 
+  if (p_value < 0.05) {
+    if (mean_diff > 0) {
+      cat("Result: Statistically significant increase (p < 0.05, post > pre)\n")
+    } else {
+      cat("Result: Statistically significant decrease (p < 0.05, post < pre)\n")
+    }
+  } else {
+    cat("Result: Not statistically significant (p >= 0.05)\n")
+  }
 }
 
-# View the results
-print(results_data)
-```
-```{r}
-#making the data presentable
-results_data <- results_data %>% 
-  setNames(str_replace_all(names(.), "_", " ")) %>% 
-  rename_with(~ str_to_title(.)) %>% 
-  mutate(Scale = str_replace_all(Scale, "(?<!^)([A-Z])", " \\1")) %>% 
-  rename(Significance = `P Value`)
 ```
 
 
@@ -290,8 +271,5 @@ tidy.data <- pre.post.data %>%
   )
 ```
 
-```{r}
-write_csv(results_data, "results_data")
-write_csv(tidy.data, "tidy_data.csv")
-```
+
 
