@@ -1,4 +1,29 @@
-.Rproj.user
-.Rhistory
-.RData
+# R-Specific Files and Folders
+.Rhistory             
+.RData                
+.Rproj.user/         
 .Ruserdata
+
+# Quarto/R Markdown related
+_book/               
+_site/  
+_quarto.yml
+_site/
+_freeze/
+
+# OS generated files 
+.DS_Store
+Thumbs.db
+*.orig
+*~
+\#*\#                   
+.*.swp              
+
+# RStudio files
+.Rproj.user/
+.Rproj.user/*
+*.Rcheck/
+
+#Other
+.cache/
+           
