@@ -118,7 +118,7 @@ Participants completed the pre-intervention survey at the beginning of the progr
 
 \newpage
 
-# Results
+# Results & Discussion
 
 The data was collected and scored according to the scoring manual of scales applied. The responses were analysed using paired T-Test to analyse and asses the pre and post scores of different scales. The tables and plots below indicate the findings. 
 
@@ -152,6 +152,12 @@ results_data1
 #| label: Figure1
 #| warning: false
 
+#install package
+## install.packages(ggplot2)
+
+#load package
+library(ggplot2)
+
 tidy.data <- read.csv("tidy_data.csv")
 
 ames1 <- ggplot(tidy.data, aes(x= Time,
@@ -163,7 +169,9 @@ ames1 <- ggplot(tidy.data, aes(x= Time,
        x = "Time", 
        y = "Ames Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 ames2 <- ggplot(tidy.data, aes(x = Time, 
                       y = Ames, 
@@ -175,12 +183,15 @@ ames2 <- ggplot(tidy.data, aes(x = Time,
   labs(color = "Participant ID", 
        x = "Time", 
        y = "Ames Score") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 grid.arrange(ames1, ames2, ncol= 2, 
              top = "Pre & Post Ames Scores")
 ```
 **For the construct of Empathy and Sympathy (Ames),** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Ames"] > results_data$"Pre Mean"[results_data$Scale == "Ames"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Ames"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Ames"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values was calculated. (p = `r results_data$"Significance"[results_data$Scale == "Ames"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Ames"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Ames"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Ames"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
+
 
 \newpage
 *Plot 2:*
@@ -195,25 +206,28 @@ SelfComp1 <- ggplot(tidy.data, aes(x= Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Self Compassion Score", 
-       title = "Pre & Post Self Compassion Scores") +
+       y = "Self Compassion Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 SelfComp2 <- ggplot(tidy.data, aes(x = Time, 
                       y = SelfCompassion, 
                       group = Name, 
                       color = as.factor(Name))) + 
-  geom_point(size = 3) +   # Scatter plot points
-  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  geom_point(size = 3) +   
+  geom_line(size = 1, alpha = 0.7) + 
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Self Compassion Score", 
-       title = "Pre & Post Self Compassion Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "Self Compassion Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
-grid.arrange(SelfComp1, SelfComp2, ncol= 2)
+grid.arrange(SelfComp1, SelfComp2, ncol= 2, 
+             top = "Pre & Post Self Compassion Scores")
 ```
 **For the construct of Self Compassion,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Self Compassion"] > results_data$"Pre Mean"[results_data$Scale == "Self Compassion"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Self Compassion"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Self Compassion"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention scores, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Self Compassion"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Self Compassion"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Self Compassion"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Self Compassion"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
@@ -234,27 +248,30 @@ emoClarity1 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "EmoClarity Score", 
-       title = "Pre & Post EmoClarity Scores") +
+       y = "EmoClarity Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Scatter + Line plot for EmoClarity scores
 emoClarity2 <- ggplot(tidy.data, aes(x = Time, 
                                      y = EmoClarity, 
                                      group = Name, 
                                      color = as.factor(Name))) + 
-  geom_point(size = 3) +   # Scatter plot points
-  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  geom_point(size = 3) +   
+  geom_line(size = 1, alpha = 0.7) + 
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "EmoClarity Score", 
-       title = "Pre & Post EmoClarity Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "EmoClarity Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Display both plots side by side
-grid.arrange(emoClarity1, emoClarity2, ncol = 2)
+grid.arrange(emoClarity1, emoClarity2, ncol = 2, 
+             top = "Pre & Post Emotional Clarity Scores")
 ```
 **For the construct of Emotional Clarity,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Emo Clarity"] > results_data$"Pre Mean"[results_data$Scale == "Emo Clarity"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Emo Clarity"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Emo Clarity"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention scores, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Emo Clarity"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Emo Clarity"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Emo Clarity"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Emo Clarity"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
@@ -273,10 +290,11 @@ selfEsteem1 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "SelfEsteem Score", 
-       title = "Pre & Post SelfEsteem Scores") +
+       y = "SelfEsteem Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Scatter + Line plot for SelfEsteem scores
 selfEsteem2 <- ggplot(tidy.data, aes(x = Time, 
@@ -288,12 +306,14 @@ selfEsteem2 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "SelfEsteem Score", 
-       title = "Pre & Post SelfEsteem Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "SelfEsteem Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Display both plots side by side
-grid.arrange(selfEsteem1, selfEsteem2, ncol = 2)
+grid.arrange(selfEsteem1, selfEsteem2, ncol = 2, 
+             top = "Pre & Post Self Esteem Scores")
 
 ```
 
@@ -315,27 +335,30 @@ BG1 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Blackgirl ID Score", 
-       title = "Pre & Post Blackgirl ID Scores") +
+       y = "Blackgirl ID Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Scatter + Line plot for Blackgirl ID scores
 BG2 <- ggplot(tidy.data, aes(x = Time, 
                                        y = BlackGirlId, 
                                        group = Name, 
                                        color = as.factor(Name))) + 
-  geom_point(size = 3) +   # Scatter plot points
-  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  geom_point(size = 3) +   
+  geom_line(size = 1, alpha = 0.7) + 
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Blackgirl ID Score", 
-       title = "Pre & Post Blackgirl ID Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "Blackgirl ID Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Display both plots side by side
-grid.arrange(BG1, BG2, ncol = 2)
+grid.arrange(BG1, BG2, ncol = 2, 
+             top = "Pre & Post Black Girl Id Scores")
 ```
 **For the construct of "Black Girl Id" (Ames),** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Black Girl Id"] > results_data$"Pre Mean"[results_data$Scale == "Black Girl Id"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Black Girl Id"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Black Girl Id"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated (p = `r results_data$"Significance"[results_data$Scale == "Black Girl Id"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Black Girl Id"] < 0.05) "less than" else "greater than"` than 0.05, i.e., the results are `r if(results_data$"Significance"[results_data$Scale == "Black Girl Id"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Black Girl Id"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the  intervention.
 
@@ -355,27 +378,30 @@ img_acceptance1 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "ImgAcceptance Score", 
-       title = "Pre & Post ImgAcceptance Scores") +
+       y = "ImgAcceptance Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Scatter + Line plot for ImgAcceptance scores
 img_acceptance2 <- ggplot(tidy.data, aes(x = Time, 
                                          y = ImgAcceptance, 
                                          group = Name, 
                                          color = as.factor(Name))) + 
-  geom_point(size = 3) +   # Scatter plot points
-  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  geom_point(size = 3) +  
+  geom_line(size = 1, alpha = 0.7) +  
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "ImgAcceptance Score", 
-       title = "Pre & Post ImgAcceptance Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "ImgAcceptance Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Display both plots side by side
-grid.arrange(img_acceptance1, img_acceptance2, ncol = 2)
+grid.arrange(img_acceptance1, img_acceptance2, ncol = 2, 
+             top = "Pre & Post Image Acceptance Scores")
 
 ```
 
@@ -396,27 +422,30 @@ relatedness1 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Relatedness Score", 
-       title = "Pre & Post Relatedness Scores") +
+       y = "Relatedness Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Scatter + Line plot for Relatedness scores
 relatedness2 <- ggplot(tidy.data, aes(x = Time, 
                                       y = Relatedness, 
                                       group = Name, 
                                       color = as.factor(Name))) + 
-  geom_point(size = 3) +   # Scatter plot points
-  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  geom_point(size = 3) +   
+  geom_line(size = 1, alpha = 0.7) +  
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Relatedness Score", 
-       title = "Pre & Post Relatedness Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "Relatedness Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Display both plots side by side
-grid.arrange(relatedness1, relatedness2, ncol = 2)
+grid.arrange(relatedness1, relatedness2, ncol = 2, 
+             top = "Pre & Post Relatedness Scores")
 ```
 **For the construct of Relatedness,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Relatedness"] > results_data$"Pre Mean"[results_data$Scale == "Relatedness"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Relatedness"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Relatedness"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Relatedness"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Relatedness"] < 0.05) "less than" else "greater than"` than 0.05, i.e., the results are `r if(results_data$"Significance"[results_data$Scale == "Relatedness"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Relatedness"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
@@ -434,27 +463,30 @@ belonging1 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Belonging Score", 
-       title = "Pre & Post Belonging Scores") +
+       y = "Belonging Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Scatter + Line plot for Belonging scores
 belonging2 <- ggplot(tidy.data, aes(x = Time, 
                                     y = Belonging, 
                                     group = Name, 
                                     color = as.factor(Name))) + 
-  geom_point(size = 3) +   # Scatter plot points
-  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  geom_point(size = 3) +   
+  geom_line(size = 1, alpha = 0.7) +  
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Belonging Score", 
-       title = "Pre & Post Belonging Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "Belonging Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Display both plots side by side
-grid.arrange(belonging1, belonging2, ncol = 2)
+grid.arrange(belonging1, belonging2, ncol = 2, 
+             top = "Pre & Post Belonging Scores")
 ```
 
 **For the construct of Belonging,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Belonging"] > results_data$"Pre Mean"[results_data$Scale == "Belonging"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Belonging"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Belonging"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Belonging"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Belonging"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Belonging"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Belonging"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
@@ -474,27 +506,30 @@ blackgirl_space1 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "BlackGirl Space Score", 
-       title = "Pre & Post BlackGirl Space Scores") +
+       y = "BlackGirl Space Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none") +
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Scatter + Line plot for BlackGirl Space scores
 blackgirl_space2 <- ggplot(tidy.data, aes(x = Time, 
                                           y = BlackGirlSpace, 
                                           group = Name, 
                                           color = as.factor(Name))) + 
-  geom_point(size = 3) +   # Scatter plot points
-  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  geom_point(size = 3) +  
+  geom_line(size = 1, alpha = 0.7) + 
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "BlackGirl Space Score", 
-       title = "Pre & Post BlackGirl Space Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "BlackGirl Space Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Display both plots side by side
-grid.arrange(blackgirl_space1, blackgirl_space2, ncol = 2)
+grid.arrange(blackgirl_space1, blackgirl_space2, ncol = 2, 
+             top = "Pre & Post Black Girl Space Scores")
 ```
 **For the construct of Black Girl Space,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Black Girl Space"] > results_data$"Pre Mean"[results_data$Scale == "Black Girl Space"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Black Girl Space"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Black Girl Space"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated. (p = `r results_data$"Significance"[results_data$Scale == "Black Girl Space"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Black Girl Space"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Black Girl Space"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Black Girl Space"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
@@ -513,41 +548,76 @@ critical_agency1 <- ggplot(tidy.data, aes(x = Time,
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Critical Agency Score", 
-       title = "Pre & Post Critical Agency Scores") +
+       y = "Critical Agency Score") +
   scale_x_discrete(limits = c("Pre", "Post"))+
-  guides(color = "none")
+  guides(color = "none")+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Scatter + Line plot for Critical Agency scores
 critical_agency2 <- ggplot(tidy.data, aes(x = Time, 
                                           y = CriticalAgency, 
                                           group = Name, 
                                           color = as.factor(Name))) + 
-  geom_point(size = 3) +   # Scatter plot points
-  geom_line(size = 1, alpha = 0.7) +  # Lines connecting points for each participant
+  geom_point(size = 3) +   
+  geom_line(size = 1, alpha = 0.7) +  
   theme_minimal() + 
   labs(color = "Participant ID", 
        x = "Time", 
-       y = "Critical Agency Score", 
-       title = "Pre & Post Critical Agency Scores") +
-  scale_x_discrete(limits = c("Pre", "Post"))
+       y = "Critical Agency Score") +
+  scale_x_discrete(limits = c("Pre", "Post"))+
+  theme(axis.title = element_text(face = "italic"),
+        plot.title = element_text(face = "italic"))
 
 # Display both plots side by side
-grid.arrange(critical_agency1, critical_agency2, ncol = 2)
+grid.arrange(critical_agency1, critical_agency2, ncol = 2, 
+             top = "Pre & Post Critical Agency Scores")
 ```
 
 
 **For the construct of Critical Agency,** it was found that the mean scores `r if (results_data$"Post Mean"[results_data$Scale == "Critical Agency"] > results_data$"Pre Mean"[results_data$Scale == "Critical Agency"]) "increased" else "decreased"` following the Teen TEE intervention (Pre = `r results_data$"Pre Mean"[results_data$Scale == "Critical Agency"]` and Post = `r results_data$"Post Mean"[results_data$Scale == "Critical Agency"]`). To assess whether this change was statistically significant, a paired t-test was conducted comparing the pre and post-intervention score, and significance values were calculated (p = `r results_data$"Significance"[results_data$Scale == "Critical Agency"]`). Since the p-value is `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "less than" else "greater than"` than 0.05, i.e. the results are `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "statistically significant" else "not significant"`. Therefore, the null hypothesis is `r if(results_data$"Significance"[results_data$Scale == "Critical Agency"] < 0.05) "rejected and it is found that there is a meaningful improvement" else "accepted and there is no meaningful improvement "` in the scores as a result of the intervention.
 
 
-
-# Discussion
-
  
 
 ## Conclusion
+The current study wanted to look at the impact of strength based programs such as Teen TEE on several psychological and identity-related constructs among Black girls. For the chosen 10 constructs, scores were collected pre and post intervention. Results showed that although there was a positive increase in all constructs, only two had significant differences i.e **Belonging** and **Black Girl Space**. This suggests that the program significantly fostered a stronger sense of community and affirmation among participants. [^2]
 
-Describe the main point of the paper. 
+[2]:  This conclusion is based on the findings of the current study. If future results differ, the conclusion should be revised accordingly. 
+
+```{r}
+#| label: Facet Wrap
+
+results_long <- results_data %>%
+  pivot_longer(
+    cols = c("Pre Mean", "Post Mean"),
+    names_to = "Time",
+    values_to = "MeanScore"
+  ) %>%
+  mutate(Time = factor(Time, levels = c("Pre Mean", "Post Mean")))
+
+# Create the faceted plot
+ggplot(results_long, aes(x = Time, y = MeanScore, fill = Time)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~ Scale, scales = "free_y", nrow = 2) +
+  labs(title = "Pre and Post Mean Scores by Scale",
+       x = "Time",
+       y = "Mean Score",
+       fill = "Time") +
+  scale_x_discrete(labels = NULL) +
+  theme_minimal()+
+  scale_fill_manual(values = c("Pre Mean" = "pink", "Post Mean" = "lightblue")) +
+  theme(
+    plot.title = element_text(face = "bold"),   
+    axis.title.x = element_text(face = "bold"),  
+    axis.title.y = element_text(face = "bold"))
+
+```
+
+However, most constructs showed no significant differences. This could be because of several limiations which should be considered when interpreting the results of this study. First, most constructs showed no significant differences, which could be attributed to the small sample size. A larger sample would provide more reliable data and better insights into the effectiveness of the Teen TEE program. Second, the reliance on quantitative data may not fully capture the complexity of the constructs being assessed. Incorporating qualitative methods, such as interviews, could provide a more comprehensive understanding of how these constructs are experienced and enhanced in the participants' lives. Additionally, the constructs were not fully assessed: questions were handpicked to suit the needs which could affect the validity and reliability of the constructs.  
+
+Despite these limitations, the results highlight the importance of tailored, strengths-based approaches that address the unique challenges faced by Black girls and underscore the potential of community-building initiatives in promoting positive identity development and resilience. Future research should aim to enhance the program's impact on personal constructs and explore its long-term effects.
+
 
 
 \newpage
